@@ -3,7 +3,6 @@ Screw.Unit(function() {
     describe("given an initial value and callback function as parameters", function () {
       var result;
       var callback = function (accumulator, index) {
-      console.log(this, accumulator, index);
         accumulator.push([this * this, index]);
         return accumulator;
       } 
