@@ -14,7 +14,7 @@ Screw.Unit(function() {
       });
     }
 
-    describe("global", function() {
+    describe("static", function() {
       before(function() {
         result = jQuery.collect([1,2,3], callback);
       });
@@ -22,7 +22,7 @@ Screw.Unit(function() {
       it_behaves_like_collect();
     });
 
-    describe("added to $()", function() {
+    describe("fn", function() {
       before(function() {
         result = jQuery([1,2,3]).collect(callback);
       });
