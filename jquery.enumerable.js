@@ -1,5 +1,8 @@
 (function ( $ ) {
   $.collect = function (enumerable, callback) {
+    if (!jQuery.isFunction(callback))
+      throw("callback needs to be a function, it was: " + callback);
+
     var result = [];
     $.each(enumerable, function (index) {
       result.push(callback.call(this, index));
@@ -12,9 +15,10 @@
   }
 
   $.inject = function (enumerable, initialValue, callback) {
-    var accumulator = initialValue;
     if (!jQuery.isFunction(callback))
       throw("callback needs to be a function, it was: " + callback);
+
+    var accumulator = initialValue;
 
     $.each(enumerable, function (index) {
       accumulator = callback.call(this, accumulator, index);
