@@ -28,6 +28,21 @@
     return $.inject(this, initialValue, callback);
   }
 
+  $.select = function(enumerable, callback) {
+    validateCallback(callback);
+
+    var result = [];
+    $.each(enumerable, function(index) {
+      if (callback.call(this, index))
+        result.push(this);
+    });
+    return result;
+  }
+
+  $.fn.select = function(callback) {
+    return $.select(this, callback);
+  }
+
   $.sum = function(enumerable) {
     return $.inject(enumerable, 0, function(accumulator) {
       return accumulator + this;
