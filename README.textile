@@ -1,0 +1,18 @@
+h1. jquery-enumerable
+
+The only fully tested, API consistent enumerable plugin for jQuery
+
+h2. Usage
+
+<pre><code>squares = $([1,2,3]).collect(function () {
+  return this * this;
+} // => [1, 4, 9]
+
+sum = $([1,2,3]).inject(0, function (accumulator) {
+  return accumulator + this;
+} // => 6</code></pre>
+
+Every function is passed an option index parameter
+<pre><code>indexed_squares = $([1,2,3]).collect(function (index) {
+  return [index + 1, this * this];
+} // => [[1, 1], [2, 4], [3, 9]]</code></pre>
