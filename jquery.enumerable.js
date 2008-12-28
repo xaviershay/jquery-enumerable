@@ -1,5 +1,5 @@
 (function ( $ ) {
-  $.collect = function (enumerable, callback) {
+  $.collect = function(enumerable, callback) {
     validateCallback(callback);
 
     var result = [];
@@ -13,7 +13,7 @@
     return $.collect(this, callback);
   }
 
-  $.inject = function (enumerable, initialValue, callback) {
+  $.inject = function(enumerable, initialValue, callback) {
     validateCallback(callback);
 
     var accumulator = initialValue;
@@ -38,6 +38,7 @@
     return $.sum(this);
   }
 
+  // Private methods
   function validateCallback(callback) {
     if (!jQuery.isFunction(callback))
       throw("callback needs to be a function, it was: " + callback);
