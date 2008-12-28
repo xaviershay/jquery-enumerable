@@ -15,7 +15,10 @@ h2. Usage
 
 sum = $([1,2,3]).inject(0, function (accumulator) {
   return accumulator + this;
-} // => 6</code></pre>
+} // => 6
+
+// Sum is actually provided as a convenience function
+$([1,2,3]).sum() // => 6</code></pre>
 
 Every function is passed an option index parameter
 <pre><code>indexed_squares = $([1,2,3]).collect(function (index) {
