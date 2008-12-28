@@ -19,6 +19,17 @@ Screw.Unit(function() {
       describe("fn", function() {
         before(function() { result = jQuery([1,2,3]).collect(callback); });
         it_behaves_like_collect();
+
+        it("can be chained", function() {
+          expect(result.collect(function() { return this })).to(equal, [[1, 0], [4, 1], [9, 2]]);
+        });
+
+        it("works on DOM elements", function() {
+          $('<span>satan</span><span>oscillate</span><span>my</span><span>metallic</span><span>sonatas</span>').appendTo( $('#dom_test') );
+
+          expect($('#dom_test span').collect(function() { return $(this).text() })).
+            to(equal, ['satan', 'oscillate', 'my', 'metallic', 'sonatas']);
+        });
       });
     });  
 
