@@ -28,6 +28,16 @@
     return $.inject(this, initialValue, callback);
   }
 
+  $.sum = function(enumerable) {
+    return $.inject(enumerable, 0, function(accumulator) {
+      return accumulator + this;
+    });
+  }
+
+  $.fn.sum = function() {
+    return $.sum(this);
+  }
+
   function validateCallback(callback) {
     if (!jQuery.isFunction(callback))
       throw("callback needs to be a function, it was: " + callback);
