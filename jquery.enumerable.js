@@ -1,7 +1,6 @@
 (function ( $ ) {
   $.collect = function (enumerable, callback) {
-    if (!jQuery.isFunction(callback))
-      throw("callback needs to be a function, it was: " + callback);
+    validateCallback(callback);
 
     var result = [];
     $.each(enumerable, function (index) {
@@ -15,8 +14,7 @@
   }
 
   $.inject = function (enumerable, initialValue, callback) {
-    if (!jQuery.isFunction(callback))
-      throw("callback needs to be a function, it was: " + callback);
+    validateCallback(callback);
 
     var accumulator = initialValue;
 
@@ -28,5 +26,10 @@
 
   $.fn.inject = function(initialValue, callback) {
     return $.inject(this, initialValue, callback);
+  }
+
+  function validateCallback(callback) {
+    if (!jQuery.isFunction(callback))
+      throw("callback needs to be a function, it was: " + callback);
   }
 })( jQuery );
