@@ -1,5 +1,6 @@
 (function ( $ ) {
   var methods = {
+    // $([1,2,3]).collect(function() { return this * this }) // => [1, 4, 9]
     collect: function(enumerable, callback) {
       var result = [];
       $.each(enumerable, function(index) {
@@ -8,6 +9,7 @@
       return result;
     },
 
+    // $([1,2,3]).inject(0, function(a) { return a + this }) // => 6
     inject: function(enumerable, initialValue, callback) {
       var accumulator = initialValue;
 
@@ -17,6 +19,7 @@
       return accumulator;
     },
 
+    // $([1,2,3]).select(function() { return this % 2 == 1 }) // => [1, 3]
     select: function(enumerable, callback) {
       var result = [];
       $.each(enumerable, function(index) {
@@ -26,6 +29,7 @@
       return result;
     },
 
+    // $([1,2,3]).sum() // => 6
     sum: function(enumerable) {
       return $.inject(enumerable, 0, function(accumulator) {
         return accumulator + this;
