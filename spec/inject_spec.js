@@ -32,7 +32,7 @@ Screw.Unit(function() {
     describe("given a callback that is not callable", function () {
       var action;
       var it_behaves_like_inject = function() {
-        it("throws an exeption", function() {
+        it("throws an exception", function() {
           var message = '';
           try {
             action();
