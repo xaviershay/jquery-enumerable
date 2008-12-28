@@ -20,8 +20,8 @@ Screw.Unit(function() {
         before(function() { result = jQuery([1,2,3]).collect(callback); });
         it_behaves_like_collect();
 
-        it("can be chained", function() {
-          expect(result.collect(function() { return this })).to(equal, [[1, 0], [4, 1], [9, 2]]);
+        it("does not automatically extend the returned array so that you can use regular array function if you like (such as join)", function() {
+          expect(result instanceof Array).to(equal, true);
         });
 
         it("works on DOM elements", function() {

@@ -6,7 +6,7 @@
     $.each(enumerable, function (index) {
       result.push(callback.call(this, index));
     });
-    return $(result);
+    return result;
   }
 
   $.fn.collect = function(callback) {
