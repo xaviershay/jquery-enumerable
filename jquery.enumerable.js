@@ -6,4 +6,8 @@
     });
     return result;
   }
+
+  $.fn.collect = function(callback) {
+    return $.collect(this, callback);
+  }
 })( jQuery );
