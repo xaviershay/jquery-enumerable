@@ -10,4 +10,19 @@
   $.fn.collect = function(callback) {
     return $.collect(this, callback);
   }
+
+  $.inject = function (enumerable, initialValue, callback) {
+    var accumulator = initialValue;
+    if (!jQuery.isFunction(callback))
+      throw("callback needs to be a function, it was: " + callback);
+
+    $.each(enumerable, function (index) {
+      accumulator = callback.call(this, accumulator, index);
+    });
+    return accumulator;
+  }
+
+  $.fn.inject = function(initialValue, callback) {
+    return $.inject(this, initialValue, callback);
+  }
 })( jQuery );
