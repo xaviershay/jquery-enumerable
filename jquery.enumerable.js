@@ -34,6 +34,13 @@
       return $.select(enumerable, negate(callback));
     },
 
+    // $([1,2]).any(function() { return this == 1 }) // => true
+    any: function(enumerable, callback) {
+      return $.inject(enumerable, false, function(accumulator, index) {
+        return accumulator || callback.call(this, index);
+      });
+    },
+
     // $([1,2,3]).sum() // => 6
     sum: function(enumerable) {
       return $.inject(enumerable, 0, function(accumulator) {
