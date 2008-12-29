@@ -29,6 +29,11 @@
       return result;
     },
 
+    // $([1,2,3]).reject(function() { return this % 2 == 1 }) // => [2]
+    reject: function(enumerable, callback) {
+      return $.select(enumerable, negate(callback));
+    },
+
     // $([1,2,3]).sum() // => 6
     sum: function(enumerable) {
       return $.inject(enumerable, 0, function(accumulator) {
@@ -73,5 +78,11 @@
   function validateCallback(callback) {
     if (!jQuery.isFunction(callback))
       throw("callback needs to be a function, it was: " + callback);
+  }
+
+  function negate(f) {
+    return function() { 
+      return !f.apply(this, arguments)
+    }
   }
 })( jQuery );
