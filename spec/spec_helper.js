@@ -3,18 +3,6 @@ Screw.Unit(function() {
     $('dom_test').empty();
   });
 
-  Screw.Unit.it_behaves_like_a_method_with_callback_protection = function(action) {
-    it("throws an exception", function() {
-      var message = '';
-      try {
-        action();
-      } catch(e) {
-        message = e
-      }
-      expect(message).to(equal, 'callback needs to be a function, it was: null');
-    });
-  }
-
   Screw.Unit.enumerableContext = function(callStatic, callIterator, context) {
     var toArray = function() {
       var result = []
@@ -34,8 +22,14 @@ Screw.Unit(function() {
 
         describe("given a callback that is not callable", function () {
           describeStaticAndIterator(function (f) {
-            Screw.Unit.it_behaves_like_a_method_with_callback_protection(function() { 
-              f.apply(this, [[]].concat(extraArguments.concat([null]))); 
+            it("throws an exception", function() {
+              var message = '';
+              try {
+                f.apply(this, [[]].concat(extraArguments.concat([null]))); 
+              } catch(e) {
+                message = e
+              }
+              expect(message).to(equal, 'callback needs to be a function, it was: null');
             });
           });
         });
