@@ -1,60 +1,31 @@
 Screw.Unit(function() {
   describe("collect", function() {
-    describe("given a callback as a parameter", function() {
-      var result;
-      var callback = function (index) {
-        return [this * this, index];
-      } 
-      var it_behaves_like_collect = function() {
-        it("returns a new array with the results of passing the current index to the block, with the current element in this", function() {
-          expect(result).to(equal, [[1, 0], [4, 1], [9, 2]]);
-        });
-      }
+    var callStatic   = function(enumerator, callback) { 
+      return jQuery.collect(enumerator, callback) 
+    }
+    var callIterator = function(enumerator, callback) { 
+      return jQuery(enumerator).collect(callback);
+    }
 
-      describe("static", function() {
-        before(function() { result = jQuery.collect([1,2,3], callback); });
-        it_behaves_like_collect();
+    Screw.Unit.enumerableContext(callStatic, callIterator, function() {
+      expect_result("returns a new array with the results of passing the current index to the block, with the current element in this", [[1, 0], [4, 1], [9, 2]], function(f) {
+        return f([1,2,3], function(index) { return [this * this, index] })
       });
 
-      describe("fn", function() {
-        before(function() { result = jQuery([1,2,3]).collect(callback); });
-        it_behaves_like_collect();
+      it_protects_from_invalid_callback();
+    });
 
-        it("does not automatically extend the returned array so that you can use regular array function if you like (such as join)", function() {
-          expect(result instanceof Array).to(equal, true);
-        });
 
-        it("works on DOM elements", function() {
-          $('<span>satan</span><span>oscillate</span><span>my</span><span>metallic</span><span>sonatas</span>').appendTo( $('#dom_test') );
-
-          expect($('#dom_test span').collect(function() { return $(this).text() })).
-            to(equal, ['satan', 'oscillate', 'my', 'metallic', 'sonatas']);
-        });
-      });
-    });  
-
-    describe("given a callback that is not callable", function () {
-      var action;
-      var it_behaves_like_collect = function() {
-        it("throws an exception", function() {
-          var message = '';
-          try {
-            action();
-          } catch(e) {
-            message = e
-          }
-          expect(message).to(equal, 'callback needs to be a function, it was: null');
-        });
-      }
-
-      describe("static", function() {
-        action = function() { jQuery.collect([], null); }
-        it_behaves_like_collect();
+    describe("iterator function", function() {
+      it("does not automatically extend the returned array so that you can use regular array function if you like (such as join)", function() {
+        expect(callIterator([], function() {}) instanceof Array).to(equal, true);
       });
 
-      describe("fn", function() {
-        action = function() { jQuery([]).collect(null); }
-        it_behaves_like_collect();
+      it("works on DOM elements", function() {
+        $('<span>satan</span><span>oscillate</span><span>my</span><span>metallic</span><span>sonatas</span>').appendTo( $('#dom_test') );
+
+        expect(callIterator('#dom_test span', function() { return $(this).text() })).
+          to(equal, ['satan', 'oscillate', 'my', 'metallic', 'sonatas']);
       });
     });
   });

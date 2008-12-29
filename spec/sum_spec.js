@@ -1,20 +1,16 @@
 Screw.Unit(function() {
   describe("sum", function() {
-    var result;
-    var it_behaves_like_sum = function() {
-      it("sums all elements in the array", function() {
-        expect(result).to(equal, 6);
-      });
+    var callStatic   = function(enumerator) { 
+      return jQuery.sum(enumerator) 
+    }
+    var callIterator = function(enumerator) { 
+      return jQuery(enumerator).sum();
     }
 
-    describe("static", function() {
-      before(function() { result = jQuery.sum([1,2,3]); });
-      it_behaves_like_sum();
+    Screw.Unit.enumerableContext(callStatic, callIterator, function() {
+      expect_result("it sums all elements in the array", 6, function(f) {
+         return f([1,2,3]);
+      });
     });
-
-    describe("fn", function() {
-      before(function() { result = jQuery([1,2,3]).sum(); });
-      it_behaves_like_sum();
-    });
-  });  
-});  
+  });
+});

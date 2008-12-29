@@ -1,50 +1,18 @@
 Screw.Unit(function() {
   describe("select", function() {
-    describe("given a callback as a parameter", function() {
-      var result;
-      var callback = function (index) {
-        return this == 1 || index == 1;
-      } 
-      var it_behaves_like_select = function() {
-        it("returns a new array containing only the elements for which the callback, called with the current index, returned true", function() {
-          expect(result).to(equal, [1, 2]);
-        });
-      }
+    var callStatic   = function(enumerator, callback) { 
+      return jQuery.select(enumerator, callback) 
+    }
+    var callIterator = function(enumerator, callback) { 
+      return jQuery(enumerator).select(callback);
+    }
 
-      describe("static", function() {
-        before(function() { result = jQuery.select([1,2,3], callback); });
-        it_behaves_like_select();
+    Screw.Unit.enumerableContext(callStatic, callIterator, function() {
+      expect_result("given a callback as a parameter, returns a new array containing only the elements for which the callback, called with the current index, returned true", [1,2], function(f) {
+         return f([1,2,3], function(index) { return this == 1 || index == 1})
       });
 
-      describe("fn", function() {
-        before(function() { result = jQuery([1,2,3]).select(callback); });
-        it_behaves_like_select();
-      });
-    });
-
-    describe("given a callback that is not callable", function () {
-      var action;
-      var it_behaves_like_select = function() {
-        it("throws an exception", function() {
-          var message = '';
-          try {
-            action();
-          } catch(e) {
-            message = e
-          }
-          expect(message).to(equal, 'callback needs to be a function, it was: null');
-        });
-      }
-
-      describe("static", function() {
-        action = function() { jQuery.select([], null); }
-        it_behaves_like_select();
-      });
-
-      describe("fn", function() {
-        action = function() { jQuery([]).select(null); }
-        it_behaves_like_select();
-      });
+      it_protects_from_invalid_callback();
     });
   });
 });
