@@ -41,6 +41,13 @@
       });
     },
 
+    // $([1,1]).any(function() { return this == 1 }) // => true
+    all: function(enumerable, callback) {
+      return $.inject(enumerable, true, function(accumulator, index) {
+        return accumulator && callback.call(this, index);
+      });
+    },
+
     // $([1,2,3]).sum() // => 6
     sum: function(enumerable) {
       return $.inject(enumerable, 0, function(accumulator) {
