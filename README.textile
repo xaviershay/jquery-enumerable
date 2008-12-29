@@ -20,7 +20,16 @@ sum = $([1,2,3]).inject(0, function (accumulator) {
 // Sum is actually provided as a convenience function
 $([1,2,3]).sum() // => 6</code></pre>
 
-Every function is passed an option index parameter
+Every function is passed an index parameter
 <pre><code>indexed_squares = $([1,2,3]).collect(function (index) {
   return [index + 1, this * this];
-} // => [[1, 1], [2, 4], [3, 9]]</code></pre>
+} // => [[1, 1], [2, 4], [3, 9]] </code></pre>
+
+The following functions are currently implemented
+<pre><code>collect
+inject
+reject
+select
+all
+any
+sum</code></pre>
