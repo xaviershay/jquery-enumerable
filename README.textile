@@ -33,3 +33,21 @@ select
 all
 any
 sum</code></pre>
+
+h2. Architecture
+
+These notes are for if you plan to extend the library.
+
+Functions are defined in an object hash, which is subsequently used to extend both jQuery's static functions and iterator functions. The function that you define must take the enumerable object as it's first argument, and the callback as its last (for functions that don't need a callback, such as @sum@, this is not required). This function is decorated with some basic error checking (such as ensuring the callback is valid). In code:
+
+<pre><code>var methods = {
+  new_function: function(enumerable, callback) { }
+}
+
+// new_function is automatically wrapped in another function to provide error checking of the arguments
+
+$.extend(methods)    // Creates $.new_function
+$.fn.extend(methods) // Creates $([]).new_function
+</code></pre>
+
+Some test helpers are provided: @expect_result@ and @it_protects_from_invalid_callback@. The ensures an error is raised if an invalid callback function is provided, the former runs the given spec against both the static (@$.new_function@) and iteraton (@$([]).new_function@) version of the function. See the existing suite for examples.
